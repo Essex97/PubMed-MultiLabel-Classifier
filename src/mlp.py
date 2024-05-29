@@ -1,19 +1,19 @@
 import keras_tuner as kt
-import os
 import time
 
 from keras.callbacks import EarlyStopping
 from keras.models import Sequential
 from keras.layers import Dense, Dropout
+from keras.optimizers import Adam
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics import classification_report
-from tensorflow import keras
 
 from output import OUTPUT_DIR
 
 
 class MyHyperModel(kt.HyperModel):
     def __init__(self, input_dim, num_labels):
+        super().__init__()
         self.input_dim = input_dim
         self.num_labels = num_labels
 
@@ -30,8 +30,8 @@ class MyHyperModel(kt.HyperModel):
         # projection layer
         model.add(Dense(self.num_labels, activation='sigmoid'))
 
-        model.compile(optimizer=keras.optimizers.Adam(hp.Choice('learning_rate', [1e-2, 1e-3, 1e-4])),
-                      loss='categorical_crossentropy',
+        model.compile(optimizer=Adam(hp.Choice('learning_rate', [1e-2, 1e-3, 1e-4])),
+                      loss='binary_crossentropy',
                       metrics=['accuracy'])
 
         return model
