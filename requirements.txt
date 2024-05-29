@@ -1,0 +1,10 @@
+torch
+transformers
+tensorflow
+matplotlib
+scikit-learn
+seaborn
+keras
+keras-tuner
+pandas
+datasets
