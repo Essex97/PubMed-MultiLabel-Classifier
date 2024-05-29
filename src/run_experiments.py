@@ -4,6 +4,7 @@ from datasets import load_dataset
 from sklearn.model_selection import train_test_split
 
 from src.logistic_regression import train_logistic_regression
+from src.mlp import train_mlp
 
 
 def load_data(dataset_id: str):
@@ -45,6 +46,9 @@ def run_experiments(model_names: list):
         # Benchmarks
         train_logistic_regression(**dataset)
 
+    if 'mlp' in model_names:
+        train_mlp(**dataset)
+
 
 if __name__ == '__main__':
-    run_experiments(model_names=['logistic_regression'])
+    run_experiments(model_names=['mlp'])
