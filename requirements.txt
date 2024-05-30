@@ -8,3 +8,5 @@ keras
 keras-tuner
 pandas
 datasets
+fastapi
+uvicorn
