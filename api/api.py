@@ -1,7 +1,7 @@
 import logging
 import uvicorn
 
-from fastapi import FastAPI, APIRouter, Response, status
+from fastapi import FastAPI, Response, status
 from transformers import (
     AutoModelForSequenceClassification,
     AutoTokenizer,
@@ -11,8 +11,7 @@ from transformers import (
 
 logging.basicConfig(level=logging.INFO)
 
-app = FastAPI()
-router = APIRouter()
+app = FastAPI(docs_url="/")
 
 model_name_or_path = "Stratos97/biobert-base-cased-PubMed-Mesh"
 model = AutoModelForSequenceClassification.from_pretrained(model_name_or_path)
@@ -21,17 +20,12 @@ tokenizer = AutoTokenizer.from_pretrained(model_name_or_path)
 pipe = pipeline(task="text-classification", model=model, tokenizer=tokenizer, top_k=None)
 
 
-@router.get("/health")
+@app.get("/health")
 async def get_health():
     return {"message": "OK"}
 
 
-@router.get("/")
-async def home():
-    return {"message": "Machine Learning service"}
-
-
-@router.post("/v1/predict")
+@app.post("/v1/predict")
 async def data(input_data: dict, response: Response):
     try:
 
@@ -53,7 +47,6 @@ async def data(input_data: dict, response: Response):
 
     return {"STATUS": "OK", "RESPONSE": results}
 
-app.include_router(router)
 
 if __name__ == "__main__":
     uvicorn.run("api:app", reload=True, port=6000, host="0.0.0.0")
