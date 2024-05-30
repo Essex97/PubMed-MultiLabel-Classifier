@@ -11,7 +11,7 @@ from transformers import (
 
 logging.basicConfig(level=logging.INFO)
 
-app = FastAPI(docs_url="/")
+app = FastAPI()
 
 model_name_or_path = "Stratos97/biobert-base-cased-PubMed-Mesh"
 model = AutoModelForSequenceClassification.from_pretrained(model_name_or_path)
@@ -23,6 +23,11 @@ pipe = pipeline(task="text-classification", model=model, tokenizer=tokenizer, to
 @app.get("/health")
 async def get_health():
     return {"message": "OK"}
+
+
+@app.get("/")
+async def home():
+    return {"message": "Machine Learning service"}
 
 
 @app.post("/v1/predict")
