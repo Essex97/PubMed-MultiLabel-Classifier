@@ -56,20 +56,21 @@ def train_transformer(transformer_path, x_train, y_train, x_test, y_test):
     # Construct the output path
     now = datetime.now()
     date_time = now.strftime("%d_%m_%Y_%H:%M:%S")
-    output_path = os.path.join(OUTPUT_DIR, transformer_path, date_time)
+    output_path = os.path.join(OUTPUT_DIR, transformer_path.split('/')[-1], date_time)
 
     # Define the training arguments
     training_args = TrainingArguments(
-        output_dir=os.path.join(OUTPUT_DIR, 'results'),
+        output_dir=os.path.join(output_path, 'results'),
         num_train_epochs=10,
         per_device_train_batch_size=8,
         per_device_eval_batch_size=8,
         warmup_steps=500,
         weight_decay=0.01,
-        logging_dir=os.path.join(OUTPUT_DIR, 'logs'),
+        logging_dir=os.path.join(output_path, 'logs'),
         logging_steps=10,
         evaluation_strategy="epoch",
-        save_strategy="epoch"
+        save_strategy="epoch",
+        load_best_model_at_end=True
     )
 
     # Initialize the Trainer
@@ -118,4 +119,4 @@ def train_transformer(transformer_path, x_train, y_train, x_test, y_test):
     plt.ylabel('Loss')
     plt.title('Evaluation Loss Curve')
     plt.legend()
-    plt.savefig(os.path.join(OUTPUT_DIR, f"{transformer_path}_losses.png"))
+    plt.savefig(os.path.join(output_path, f"{transformer_path}_losses.png"))
