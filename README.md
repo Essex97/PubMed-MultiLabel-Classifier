@@ -1,6 +1,42 @@
-# AtyponAssignment
+# Atypon Assignment
+
+### Assignment 1: Multi-label text classification
 
 ## Exploratory Data Analysis (EDA)
+In this project, several visualizations were generated to provide insights into the dataset. 
+Below are brief descriptions of each of the provided visualizations:
+
+
+### Label Distribution
+![](output/label_distribution.png)
+
+The **Label Distribution** plot displays the frequency of each label within the dataset. 
+This bar chart helps identify which labels are most common and which are rare. 
+Understanding the distribution of labels is important for balancing the dataset and ensuring that the model does not become biased towards more prevalent categories.
+
+### Label Correlation
+![](output/label_correlation.png)
+
+The **Label Correlation** plot visualizes the relationships between different labels in the dataset. 
+This heatmap shows how frequently pairs of labels co-occur in the same samples. 
+High correlation values indicate that certain labels often appear together, which might suggest underlying patterns or dependencies between specific categories.
+Some of the high correlated patterns are: [D, M], [D, F], [D, N], [D, Z], [D, I], [A, N], [A, Z], [A, I].
+
+### Number of Labels Distribution
+![](output/number_of_label_distribution.png)
+
+The **Number of Labels Distribution** plot illustrates the distribution of the number of labels assigned to each sample in the dataset. 
+This histogram provides insights into how many labels are typically associated with a single sample. 
+It helps in understanding the complexity of the multi-label classification problem and whether most samples have few or many labels.
+In this case, we can see by the diagram that each sample has on average 6 labels. 
+
+### Text Length Distribution
+![](output/text_length_distribution.png)
+
+The **Text Length Distribution** plot shows the distribution of the lengths of the text samples in the dataset. 
+This histogram indicates how many samples fall into different length categories, measured by the number of characters. 
+This information is useful for preprocessing steps such as padding or truncating text data to a uniform length before feeding it into machine learning models.
+As we can see on the diagram, the length of the samples or on average 1316 characters.
 
 ## Experiments
 Our experimentation procedure included multiple models. 
@@ -85,7 +121,7 @@ In our experiments, we utilized two variants:
 * ```bert-base-uncased```: A general-purpose BERT model that has been pre-trained on a large corpus of English text, providing robust language understanding capabilities.
 * ```BioBERT```: A specialized variant of BERT that has been pre-trained on PubMed articles, making it particularly effective for biomedical text classification tasks.
 
-Below we can see the results of ```bert-base-uncased``` and ```BioBERT``` respectively:
+Below we can see the results of ```bert-base-uncased``` and ```BioBERT``` respectively and their corresponding evaluation loss curves:
 
 ```text
 BERT
@@ -111,6 +147,9 @@ BERT
 weighted avg       0.53      0.49      0.42     57095
  samples avg       0.65      0.49      0.55     57095
 ```
+![](output/bert-base-uncased_losses.png)
+
+---
 
 ```text
 BioBERT
@@ -136,6 +175,8 @@ BioBERT
 weighted avg       0.83      0.84      0.82     57095
  samples avg       0.84      0.84      0.83     57095
 ```
+![](output/biobert-base-cased-v1.2_losses.png)
+
 The BioBERT model achieved the best performance among the models we tested. 
 Consequently, we decided to upload this model to HuggingFace Hub, where it is available [here](https://huggingface.co/Stratos97/biobert-base-cased-PubMed-Mesh). 
 This is the model used in the API described in the section below.
