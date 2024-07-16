@@ -1,11 +1,19 @@
-# Atypon Assignment
+# Multi-Label Text Classification for PubMed Articles
+This project involves developing a multi-label text classification service for a dataset of approximately 50,000 research articles from the PubMed repository. 
+The goal is to classify articles into their respective MeSHRoot labels using a deep learning (DL) architecture.
 
-### Assignment 1: Multi-label text classification
+## Project Overview
+The project includes the following steps:
+* Exploratory Data Analysis (EDA)
+* Model Training and Evaluation
+* API/Usage instructions
 
-## Exploratory Data Analysis (EDA)
-In this project, several visualizations were generated to provide insights into the dataset. 
-Below are brief descriptions of each of the provided visualizations:
-
+## Exploratory Data Analysis
+The [dataset](https://huggingface.co/datasets/owaiskha9654/PubMed_MultiLabel_Text_Classification_Dataset_MeSH) consists 
+of a collection of research articles from PubMed, which have been manually annotated by Biomedical Experts using labels 
+from the hierarchical MeSH taxonomy. These labels have been mapped to their root labels (MeSHRoot) to address issues 
+related to large output space and label sparsity. Several visualizations were generated to provide insights into 
+the dataset. Below, there are brief descriptions of each of the provided visualizations:
 
 ### Label Distribution
 ![](output/label_distribution.png)
@@ -38,12 +46,12 @@ This histogram indicates how many samples fall into different length categories,
 This information is useful for preprocessing steps such as padding or truncating text data to a uniform length before feeding it into machine learning models.
 As we can see on the diagram, the length of the samples or on average 1316 characters.
 
-## Experiments
-Our experimentation procedure included multiple models. 
-We began with Logistic Regression to establish benchmarks, 
-proceeded with a MultiLayer Perceptron (MLP) and performed hyperparameter tuning, 
-and concluded with the use of Transformers, specifically BERT and a pre-trained model in the biomedical domain. 
-We observed that this pre-trained model demonstrated the best performance.
+## Model Training and Evaluation
+Our experimental procedure encompassed the evaluation of multiple models. Initially, we employed Logistic Regression (LR)
+to establish baseline benchmarks. Subsequently, we utilized a MultiLayer Perceptron (MLP) and conducted hyperparameter 
+tuning to enhance model performance. Finally, we used some Transformer models, specifically BERT and a pre-trained model 
+tailored to the biomedical domain (BioBERT). Notably, the pre-trained biomedical model exhibited the best performance 
+compared to the other models.
 
 ### 1. Logistic Regression
 Logistic regression models are inherently designed to handle binary classification problems, where the target vector contains only two classes. 
@@ -181,14 +189,14 @@ The BioBERT model achieved the best performance among the models we tested.
 Consequently, we decided to upload this model to HuggingFace Hub, where it is available [here](https://huggingface.co/Stratos97/biobert-base-cased-PubMed-Mesh). 
 This is the model used in the API described in the section below.
 
-## API
+## API/Usage instructions
 An API has been created using the ```FastAPI``` and ```Uvicorn``` libraries. 
 Below, you can find instructions on how to run it locally or use the deployed version directly.
 
 **Local usage:**
 1. Start the FastAPI application:
     ```bash
-    cd AtyponAssignment/api
+    cd PubMed-MultiLabel-Classifier/api
     uvicorn api:app --reload
     ```
     By default, the application will be hosted at ```http://127.0.0.1:8000/```. <br>
